@@ -20,9 +20,11 @@ def find_xml_name_list(path):
 
 from xml.dom.minidom import parse
 
-def read_xml(root_path, xml_path):
+def read_xml_return_obj_list(root_path, xml_path):
     xml_tree = parse(os.path.join(root_path, xml_path))
-    # print(xml_tree.getElementsByTagName('object'))
+    # 因为getElementsByTagName('name')返回列表只有1个元素，所以getElementsByTagName('name')[0]，来直接获取DOM Element
+    # 然后又因为只有一个childNodes，所以:childNodes[0]
+    # print(xml_tree.getElementsByTagName('object')[0].getElementsByTagName('name')[0].childNodes[0].data)
     # 返回一个list
     return xml_tree.getElementsByTagName('object')
 
@@ -30,7 +32,7 @@ def check_xml_on_this_path_if_have_empty(root_path):
     li_xml_name = find_xml_name_list(root_path)
     empty_xml_name_list = []
     for i in range(len(li_xml_name)):
-        object_list = read_xml(root_path, li_xml_name[i])
+        object_list = read_xml_return_obj_list(root_path, li_xml_name[i])
 
         # print(f"第{i}个xml，名字为{li_xml_name[i]}，object_list \n {object_list}")
 
@@ -45,5 +47,8 @@ def check_xml_on_this_path_if_have_empty(root_path):
 
     return True
 
+
+# check has empty xml
 have_empty_xml = check_xml_on_this_path_if_have_empty(path)
 print(have_empty_xml)
+
