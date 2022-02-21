@@ -33,13 +33,14 @@ ticks:
 '''
 import PIL
 import PIL.Image
-from labelme.logger import logger
+# from labelme.logger import logger
 # 新增
 def load_image_file(filename):
     try:
         image_pil = PIL.Image.open(filename)
     except IOError:
-        logger.error("Failed opening image file: {}".format(filename))
+        # logger.error("Failed opening image file: {}".format(filename))
+        print("Failed opening image file: {}".format(filename))
         return
 
     # apply orientation to image according to exif
